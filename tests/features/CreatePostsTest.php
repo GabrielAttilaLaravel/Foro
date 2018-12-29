@@ -29,4 +29,14 @@ class CreatePostsTest extends FeatureTestCase
         $this->visit(route('posts.create'))
              ->seePageIs(route('login'));
     }
+
+    function test_create_post_form_validation()
+    {
+        $this->actingAs($this->defaultUser())
+            ->visit(route('posts.create'))
+            ->press('Publicar')
+            ->seePageIs(route('posts.create'))
+            ->seeInElement('.help-block', 'El campo título es obligatorio')
+            ->seeInElement('.help-block', 'El campo contenido es obligatorio');
+    }
 }
