@@ -1,21 +1,17 @@
 <?php
 
 
-use App\Models\Post;
+use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class PostIntegrationTest extends TestCase
 {
-    use \Illuminate\Foundation\Testing\DatabaseTransactions;
+    use DatabaseTransactions;
 
     function test_a_slug_is_generated_and_saved_to_the_database()
     {
-        $user = $this->defaultUser();
-
-        $post = factory(Post::class)->make([
+        $post = $this->createPost([
             'title' => 'Como instalar laravel',
         ]);
-
-        $user->posts()->save($post);
 
         $this->assertSame( 'como-instalar-laravel', $post->fresh()->slug);
     }

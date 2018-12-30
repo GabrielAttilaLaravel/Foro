@@ -30,5 +30,8 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence,
         'content' => $faker->paragraph,
         'pending' => $faker->boolean(),
+        'user_id' => function (){
+            return factory(\App\User::class)->create()->id;
+        },
     ];
 });
