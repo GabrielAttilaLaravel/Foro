@@ -8,4 +8,6 @@
             <li><a href="{{ $post->url }}">{{ $post->title }}</a></li>
         @endforeach
     </ul>
+
+    {!! $posts->render() !!}
 @endsection
