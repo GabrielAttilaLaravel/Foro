@@ -35,3 +35,15 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         },
     ];
 });
+
+$factory->define(App\Models\Comment::class, function (Faker\Generator $faker) {
+    return [
+        'comment' => $faker->paragraph,
+        'user_id' => function (){
+            return factory(\App\User::class)->create()->id;
+        },
+        'post_id' => function (){
+            return factory(\App\Models\Post::class)->create()->id;
+        },
+    ];
+});

@@ -20,6 +20,8 @@ class CreatePostsTable extends Migration
             $table->text('slug');
             $table->mediumText('content');
             $table->boolean('pending')->default(true);
+            $table->unsignedInteger('answer_id')->nullable();
+
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
