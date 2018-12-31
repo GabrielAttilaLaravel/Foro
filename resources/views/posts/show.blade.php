@@ -6,4 +6,13 @@
     <p>{{ $post->content }}</p>
 
     <p>{{ $post->user->name }}</p>
+
+    {!! Form::open(['route' => ['comments.store', $post], 'method' => 'POST']) !!}
+
+        {!! Field::textarea('comment') !!}
+        <button type="submit">
+            Publicar comentario
+        </button>
+
+    {!! Form::close() !!}
 @endsection
