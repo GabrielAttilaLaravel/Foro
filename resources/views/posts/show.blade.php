@@ -3,9 +3,11 @@
 @section('content')
     <h1>{{ $post->title }}</h1>
 
-    <p>{{ $post->content }}</p>
+    {!! $post->safe_html_content !!}
 
     <p>{{ $post->user->name }}</p>
+
+    <h4>Comentarios</h4>
 
     {!! Form::open(['route' => ['comments.store', $post], 'method' => 'POST']) !!}
 
@@ -18,6 +20,7 @@
     {{-- TODO: listar los comentarios y mostrar el author del mismo --}}
     @foreach($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
+            {{-- TODO: support markdown in the comments as well! --}}
             {{ $comment->comment }}
             {{--
                 verificamos si el usuario puede aceptar el comentario y este comentario no
