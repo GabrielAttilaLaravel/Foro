@@ -20,8 +20,8 @@
     {{-- TODO: listar los comentarios y mostrar el author del mismo --}}
     @foreach($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
-            {{-- TODO: support markdown in the comments as well! --}}
-            {{ $comment->comment }}
+            {{-- $comment->comment --}}
+            {!! $comment->safe_html_comment !!}
             {{--
                 verificamos si el usuario puede aceptar el comentario y este comentario no
                 esta ya marcado como la respuesta del post

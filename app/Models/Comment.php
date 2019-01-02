@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\User;
+use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
@@ -30,5 +31,10 @@ class Comment extends Model
     public function getAnswerAttribute()
     {
         return $this->id == $this->post->answer_id;
+    }
+
+    public function getSafeHtmlCommentAttribute()
+    {
+        return Markdown::convertToHtml(e($this->comment));
     }
 }
