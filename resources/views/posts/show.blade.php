@@ -7,6 +7,12 @@
 
     <p>{{ $post->user->name }}</p>
 
+    @if(auth()->check() && ! auth()->user()->isSubscribedTo($post))
+        {!! Form::open(['route' => ['posts.suscribe', $post], 'method' => 'POST' ]) !!}
+            <button type="submit">Suscribirse al post</button>
+        {!! Form::close() !!}
+    @endif
+
     <h4>Comentarios</h4>
 
     {!! Form::open(['route' => ['comments.store', $post], 'method' => 'POST']) !!}
@@ -17,7 +23,7 @@
         </button>
 
     {!! Form::close() !!}
-    {{-- TODO: listar los comentarios y mostrar el author del mismo --}}
+    {{-- TODO: paginate comments y mostrar el author del mismo --}}
     @foreach($post->latestComments as $comment)
         <article class="{{ $comment->answer ? 'answer' : '' }}">
             {{-- $comment->comment --}}
