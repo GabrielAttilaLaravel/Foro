@@ -15,10 +15,25 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        //TODO: add valiadtion!
+        $this->validate($request, [
+            'email' => 'required|email|unique:users,email',
+            'first_name' => 'required',
+            'last_name' => 'required',
+        ],[
+            'email.required' => 'El campo email es obligatorio',
+            'email.email' => 'El campo email no es valido',
+            'last_name' => 'El campo apellido es obligatorio'
+        ]);
 
         $user = User::create($request->all());
 
         Token::generateFor($user)->sendByEmail();
+
+        return redirect()->route('user.registerConfirmation');
+    }
+
+    public function registerConfirmation()
+    {
+        return  view('register.registerConfirmation');
     }
 }

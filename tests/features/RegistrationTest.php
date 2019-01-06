@@ -40,13 +40,71 @@ class RegistrationTest extends FeatureTestCase
             return $mail->token->id == $token->id;
         });
 
-        //TODO: finish this feature
-
-        return;
-
-        $this->seeRouteIs('register.confirmation')
+        $this->seeRouteIs('user.registerConfirmation')
             ->see('Gracias por registrarte')
             ->see('Enviamos a tu email un enlace para que inicies sesión');
 
     }
+
+    function test_the_first_name_is_required()
+    {
+        $this->visitRoute('user.create')
+            ->type('admin@gabrielattila.com.ve', 'email')
+            ->type('gabrielattila', 'username')
+            ->type('', 'first_name')
+            ->type('Moreno', 'last_name')
+            ->press('Registrate');
+
+        $this->seeRouteIs('user.create')
+            ->see('El campo nombre es obligatorio');
+
+        $this->assertEquals(0, User::count());
+    }
+
+    function test_the_last_name_is_required()
+    {
+        $this->visitRoute('user.create')
+            ->type('admin@gabrielattila.com.ve', 'email')
+            ->type('gabrielattila', 'username')
+            ->type('Gabriel', 'first_name')
+            ->type('', 'last_name')
+            ->press('Registrate');
+
+        $this->seeRouteIs('user.create')
+            ->see('El campo apellido es obligatorio');
+
+        $this->assertEquals(0, User::count());
+    }
+
+    function test_the_email_is_required()
+    {
+        $this->visitRoute('user.create')
+            ->type('', 'email')
+            ->type('gabrielattila', 'username')
+            ->type('Gabriel', 'first_name')
+            ->type('Moreno', 'last_name')
+            ->press('Registrate');
+
+        $this->seeRouteIs('user.create')
+            ->see('El campo email es obligatorio');
+
+        $this->assertEquals(0, User::count());
+    }
+
+    function test_a_user_enters_an_invalid_email()
+    {
+        $this->visitRoute('user.create')
+            ->type('gabriel@.c', 'email')
+            ->type('gabrielattila', 'username')
+            ->type('Gabriel', 'first_name')
+            ->type('Moreno', 'last_name')
+            ->press('Registrate');
+
+        $this->seeRouteIs('user.create')
+            ->see('El campo email no es valido');
+
+        $this->assertEquals(0, User::count());
+    }
+
+
 }
