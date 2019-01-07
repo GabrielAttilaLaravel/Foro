@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\User;
 use App\Mail\TokenMail;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Database\Eloquent\Model;
 
@@ -39,8 +41,22 @@ class Token extends Model
         ]);*/
     }
 
+    public static function fineActive($token)
+    {
+        return static::where('token', $token)
+            ->where('created_at', '>=', Carbon::parse('-30 min'))
+            ->first();
+    }
+
     public function sendByEmail()
     {
         Mail::to($this->user)->send(new TokenMail($this));
+    }
+
+    public function login()
+    {
+        Auth::login($this->user);
+
+        $this->delete();
     }
 }
