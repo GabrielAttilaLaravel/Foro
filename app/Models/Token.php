@@ -2,15 +2,20 @@
 
 namespace App\Models;
 
-use App\Mail\TokenMail;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
+use App\Mail\TokenMail;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Database\Eloquent\Model;
 
 class Token extends Model
 {
     protected $guarded = [];
 
+    public function getRouteKeyName()
+    {
+        return 'token';
+    }
+    
     public function user()
     {
         return $this->belongsTo(User::class);

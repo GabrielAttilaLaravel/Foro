@@ -10,7 +10,7 @@
 
                     {!! Alert::Render() !!}
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ route('login.sentToken') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('token.sentToken') }}">
                         {{ csrf_field() }}
 
                         {!! Field::email('email') !!}
