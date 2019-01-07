@@ -40,7 +40,7 @@ class RegistrationTest extends FeatureTestCase
             return $mail->token->id == $token->id;
         });
 
-        $this->seeRouteIs('user.registerConfirmation')
+        $this->seeRouteIs('user.confirm')
             ->see('Gracias por registrarte')
             ->see('Enviamos a tu email un enlace para que inicies sesión');
 

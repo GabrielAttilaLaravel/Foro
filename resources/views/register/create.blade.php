@@ -19,7 +19,7 @@
                         </div>
                     @endif
 
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}">
+                    <form class="form-horizontal" role="form" method="POST" action="{{ route('user.store') }}">
                         {{ csrf_field() }}
 
                         {!! Field::email('email') !!}

@@ -7,7 +7,8 @@ class ShowPostTest extends FeatureTestCase
     function test_a_user_can_see_the_post_details()
     {
         $user = $this->defaultUser([
-            'name' => 'Gabriel Moreno'
+            'first_name' => 'Gabriel',
+            'last_name' => 'Moreno'
         ]);
 
         $post = $this->createPost([

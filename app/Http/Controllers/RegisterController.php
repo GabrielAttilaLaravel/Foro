@@ -29,10 +29,10 @@ class RegisterController extends Controller
 
         Token::generateFor($user)->sendByEmail();
 
-        return redirect()->route('user.registerConfirmation');
+        return redirect()->route('user.confirm');
     }
 
-    public function registerConfirmation()
+    public function confirm()
     {
         return  view('register.registerConfirmation');
     }
