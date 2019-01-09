@@ -4,7 +4,7 @@
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class PostIntegrationTest extends TestCase
+class PostIntegrationTest extends FeatureTestCase
 {
     use DatabaseTransactions;
 
