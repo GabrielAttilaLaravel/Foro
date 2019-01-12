@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Category;
 use App\Models\Post;
 
 class CreatePostsTest extends FeatureTestCase
@@ -10,17 +11,21 @@ class CreatePostsTest extends FeatureTestCase
         $title = 'Esta es una pregunta';
         $content = 'Este es el contenido';
 
+        $category = factory(Category::class)->create();
+
         $this->actingAs($user = $this->defaultUser())
             ->visit(route('posts.create'))
             ->type($title, 'title')
             ->type($content, 'content')
+            ->select($category->id, 'category_id')
             ->press('Publicar');
 
         $this->seeInDatabase('posts', [
             'title' => $title,
             'content' => $content,
             'pending' => true,
-            'user_id' => $user->id
+            'user_id' => $user->id,
+            'category_id' => $category->id
         ]);
 
         $post = Post::first();

@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Models\Category;
 use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
@@ -21,14 +22,18 @@ class PostIntegrationTest extends FeatureTestCase
     {
         $user = factory(User::class)->create();
 
+        $category = factory(Category::class)->create();
+
         $post = $user->createPost([
             'title' => 'titulo',
             'content' => 'contenido',
+            'category_id' => $category->id,
         ]);
 
         $this->seeInDatabase('posts',[
             'title' => $post->title,
             'content' => $post->content,
+            'category_id' => $category->id,
         ]);
 
         $this->seeInDatabase('subscriptions', [

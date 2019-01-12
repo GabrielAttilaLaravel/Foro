@@ -31,8 +31,11 @@ $factory->define(App\Models\Post::class, function (Faker\Generator $faker) {
         'content' => $faker->paragraph,
         'pending' => true,
         'user_id' => function (){
-            return factory(\App\User::class)->create()->id;
-        },
+                return factory(\App\User::class)->create()->id;
+            },
+        'category_id' => function (){
+                return factory(\App\Models\Category::class)->create()->id;
+            },
     ];
 });
 
@@ -45,5 +48,14 @@ $factory->define(App\Models\Comment::class, function (Faker\Generator $faker) {
         'post_id' => function (){
             return factory(\App\Models\Post::class)->create()->id;
         },
+    ];
+});
+
+$factory->define(App\Models\Category::class, function (Faker\Generator $faker) {
+    $name = $faker->unique()->sentence;
+
+    return [
+        'name' => $name,
+        'slug' => str_slug($name),
     ];
 });
