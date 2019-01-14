@@ -1,13 +1,12 @@
 <?php
 
 
-use App\Models\Category;
 use App\User;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Post;
+use App\Models\Category;
 
 class PostIntegrationTest extends FeatureTestCase
 {
-    use DatabaseTransactions;
 
     function test_a_slug_is_generated_and_saved_to_the_database()
     {
@@ -40,5 +39,36 @@ class PostIntegrationTest extends FeatureTestCase
             'user_id' => $user->id,
             'post_id' => $post->id,
         ]);
+    }
+
+    function tests_a_user_can_filter_posts_by_category()
+    {
+        $laravel = factory(Category::class)->create([
+            'name' => 'Laravel',
+            'slug' => 'laravel'
+        ]);
+
+        $vue = factory(Category::class)->create([
+            'name' => 'Vue,js',
+            'slug' => 'vue-js'
+        ]);
+
+        factory(Post::class)->create([
+            'title' => 'Post de Laravel 1',
+            'category_id' => $laravel->id
+        ]);
+
+        factory(Post::class)->create([
+            'title' => 'Post de Laravel 2',
+            'category_id' => $laravel->id
+        ]);
+
+        $posts = Post::orderBy('created_at', 'DESC')->category($laravel)->get();
+
+        $this->assertSame(2, $posts->count());
+
+        $this->assertSame('post-de-laravel-1', $posts->first()->slug);
+
+        $this->assertSame('post-de-laravel-2', $posts->last()->slug);
     }
 }
