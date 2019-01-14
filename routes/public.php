@@ -11,11 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/home', 'HomeController@index');
 
-Route::get('/', 'PostController@index')->name('posts.index');
+Route::get('{category?}', 'PostController@index')->name('posts.index');
 Route::get('posts/{post}-{slug}', 'PostController@show')->name('posts.show');

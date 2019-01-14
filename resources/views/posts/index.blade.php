@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <h1>Post</h1>
+    <h1>
+        {{ $category->exists ? 'Post de '. $category->name : 'Posts' }}
+    </h1>
 
     <ul>
         @foreach($posts as $post)
@@ -10,4 +12,6 @@
     </ul>
 
     {!! $posts->render() !!}
+
+    {!! Menu::make($categoryItems, 'nav categories') !!}
 @endsection

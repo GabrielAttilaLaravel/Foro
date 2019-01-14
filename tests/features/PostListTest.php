@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use App\Models\Post;
 use Carbon\Carbon;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
@@ -19,6 +20,42 @@ class PostListTest extends FeatureTestCase
             ->see($post->title)
             ->click($post->title)
             ->seePageIs($post->url);
+    }
+
+    function tests_a_user_can_see_posts_filtered_by_category()
+    {
+        $laravel = factory(Category::class)->create([
+            'name' => 'Laravel',
+            'slug' => 'laravel'
+        ]);
+
+        $vue = factory(Category::class)->create([
+            'name' => 'Vue,js',
+            'slug' => 'vue-js'
+        ]);
+
+        $laravelPost = factory(Post::class)->create([
+            'title' => 'Post de Laravel',
+            'category_id' => $laravel->id
+        ]);
+
+        $vuePost = factory(Post::class)->create([
+            'title' => 'Post de Vue.js',
+            'category_id' => $vue->id
+        ]);
+
+        $this->visit('/')
+            ->see($laravelPost->title)
+            ->see($vuePost->title)
+            // cuando el usuario haga click en el enlace que se va a llamar laravel
+            // el cual estara en el listado de categorias
+            ->within('.categories', function (){
+                    $this->click('Laravel');
+                })
+            ->seeInElement('h1', 'Post de Laravel')
+            ->see($laravelPost->title)
+            ->dontSee($vuePost->title);
+
     }
 
     function test_the_posts_are_paginated()
