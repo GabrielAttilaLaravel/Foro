@@ -1,0 +1,1 @@
+<h2>No existen post completados por el momento</h2>

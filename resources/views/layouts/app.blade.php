@@ -12,7 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-
+    <style>
+        .active { font-weight: bold; }
+    </style>
     <!-- Scripts -->
     <script>
         window.Laravel = <?php echo json_encode([
