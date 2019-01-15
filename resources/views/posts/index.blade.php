@@ -16,6 +16,16 @@
             {!! Menu::make($categoryItems, 'nav categories') !!}
         </div>
         <div class="col-md-10">
+            {!! Form::open(['method' => 'GET', 'class' => 'form form-inline']) !!}
+                {!! Form::select(
+                    'orden',
+                    trans('options.posts-order'),
+                    request('orden'),
+                    ['class' => 'form-control']
+                ) !!}
+
+                <button type="submit" class="btn btn-default">Ordenar</button>
+            {!! Form::close() !!}
 
             @each('posts.partials.items', $posts, 'post', 'posts.partials.empty')
 
