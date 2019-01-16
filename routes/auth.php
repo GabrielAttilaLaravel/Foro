@@ -11,3 +11,5 @@ Route::post('comments/{comment}/accept', 'CommentController@accept')->name('comm
 // Subscriptions
 Route::post('posts/{post}/suscribe', 'SubscriptionController@subscribe')->name('posts.subscribe');
 Route::delete('posts/{post}/suscribe', 'SubscriptionController@unsubscribe')->name('posts.unsubscribe');
+
+Route::get('mis-posts/{category?}', 'ListPostController')->name('posts.mine');
