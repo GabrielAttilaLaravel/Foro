@@ -9,5 +9,5 @@ Route::post('posts/{post}/comment', 'CommentController@store')->name('comments.s
 Route::post('comments/{comment}/accept', 'CommentController@accept')->name('comments.accept');
 
 // Subscriptions
-Route::post('posts/{post}/suscribe', 'SubscriptionController@subscribe')->name('posts.suscribe');
-Route::delete('posts/{post}/suscribe', 'SubscriptionController@unsubscribe')->name('posts.unsuscribe');
+Route::post('posts/{post}/suscribe', 'SubscriptionController@subscribe')->name('posts.subscribe');
+Route::delete('posts/{post}/suscribe', 'SubscriptionController@unsubscribe')->name('posts.unsubscribe');

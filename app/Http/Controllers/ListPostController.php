@@ -21,23 +21,7 @@ class ListPostController extends Controller
 
         $posts->appends(request()->intersect(['orden']));
 
-        $categoryItems = $this->getCategoryItems($routeName);
-
-        return view('posts.index', compact('posts', 'category', 'categoryItems'));
-    }
-
-    protected function getCategoryItems(string $routeName)
-    {
-        return Category::query()
-            ->orderBy('name')
-            ->get()
-            ->map(function ($category) use ($routeName) {
-                return [
-                    'title' => $category->name,
-                    'full_url' => route($routeName, $category)
-                ];
-            })
-            ->toArray();
+        return view('posts.index', compact('posts', 'category'));
     }
 
     protected function getListScopes(Category $category, string $routeName)
