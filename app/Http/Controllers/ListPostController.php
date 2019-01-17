@@ -10,6 +10,14 @@ class ListPostController extends Controller
 {
     public function __invoke(Category $category = null, Request $request)
     {
+        $routeStatus = [
+            'posts.mine' => '',
+            'posts.pending' => 'pendiente',
+            'posts.completed' => 'completado'
+        ];
+
+        $pending = $routeStatus[$request->route()->getName()]  ?? '';
+
         list($orderColumn, $orderDirection) = $this->getListOrder($request->orden);
 
         $posts = Post::query()
@@ -20,7 +28,7 @@ class ListPostController extends Controller
             ->paginate()
             ->appends($request->intersect(['orden']));
 
-        return view('posts.index', compact('posts', 'category'));
+        return view('posts.index', compact('posts', 'category', 'pending'));
     }
 
     public function getRouteScopes(Request $request)
