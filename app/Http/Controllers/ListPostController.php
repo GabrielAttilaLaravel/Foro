@@ -14,7 +14,8 @@ class ListPostController extends Controller
 
         $posts = Post::query()
             ->with(['user', 'category'])
-            ->scopes($this->getListScopes($category, $request))
+            ->category($category)
+            ->scopes($this->getRouteScopes($request))
             ->orderBy($orderColumn, $orderDirection)
             ->paginate()
             ->appends($request->intersect(['orden']));
@@ -22,32 +23,25 @@ class ListPostController extends Controller
         return view('posts.index', compact('posts', 'category'));
     }
 
-    protected function getListScopes(Category $category, Request $request)
+    public function getRouteScopes(Request $request)
     {
-        $scopes = [];
+        $scopes = [
+            'posts.mine' => ['byUser' => [$request->user()]],
+            'posts.pending' => ['pending'],
+            'posts.completed' => ['completed']
+        ];
 
-        $routeName = $request->route()->getName();
-
-        if ($category->exists) {
-            $scopes['category'] = [$category];
-        }elseif ($routeName == 'posts.mine') {
-            $scopes['byUser'] = [$request->user()];
-        }elseif ($routeName == 'posts.pending') {
-            $scopes[] = 'pending';
-        }elseif ($routeName == 'posts.completed') {
-            $scopes[] = 'completed';
-        }
-        return $scopes;
+        return $scopes[$request->route()->getName()] ?? [];
     }
-
+    
     protected function getListOrder($orden)
     {
-        if ($orden == 'recientes'){
-            return ['created_at', 'desc'];
-        }elseif ($orden == 'antiguos'){
-            return ['created_at', 'asc'];
-        }else{
-            return ['created_at', 'desc'];
-        }
+        $orders = [
+            'recientes' => ['created_at', 'desc'],
+            'antiguos' => ['created_at', 'asc'],
+
+        ];
+
+        return $orders[$orden] ?? ['created_at', ' desc'];
     }
 }
