@@ -28,9 +28,9 @@ class Comment extends Model
         $this->post->save();
     }
 
-    public function getAnswerAttribute()
+    public function answer($answerID)
     {
-        return $this->id == $this->post->answer_id;
+        return $this->id == $answerID;
     }
 
     public function getSafeHtmlCommentAttribute()

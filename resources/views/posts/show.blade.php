@@ -41,16 +41,16 @@
             {{-- todo: Paginate comments! --}}
 
             @foreach($post->latestComments as $comment)
-                <article class="{{ $comment->answer ? 'answer' : '' }}">
+                <article class="{{ $comment->answer($post->answer_id) ? 'answer' : '' }}">
                     {{-- $comment->comment --}}
                     {!! $comment->safe_html_comment !!}
                     {{--
                         verificamos si el usuario puede aceptar el comentario y este comentario no
                         esta ya marcado como la respuesta del post
                     --}}
-                    @if(Gate::allows('accept', $comment) && !$comment->answer)
+                    @if(Gate::allows('accept', $comment) && !$comment->answer(true))
                         {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
-                        <button type="submit" class="btn btn-default">Aceptar respuesta</button>
+                            <button type="submit" class="btn btn-default">Aceptar respuesta</button>
                         {!! Form::close() !!}
                     @endif
                 </article>
