@@ -48,7 +48,7 @@
                         verificamos si el usuario puede aceptar el comentario y este comentario no
                         esta ya marcado como la respuesta del post
                     --}}
-                    @if(Gate::allows('accept', $comment) && !$comment->answer(true))
+                    @if(Gate::allows('accept', $comment) && !$comment->answer($post->answer_id))
                         {!! Form::open(['route' => ['comments.accept', $comment], 'method' => 'POST']) !!}
                             <button type="submit" class="btn btn-default">Aceptar respuesta</button>
                         {!! Form::close() !!}

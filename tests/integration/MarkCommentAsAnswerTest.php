@@ -16,8 +16,8 @@ class MarkCommentAsAnswer extends TestCase
         ]);
 
         $comment->markAsAnswer();
-
-        $this->assertTrue($comment->fresh()->answer);
+        //dd($post->first()->answer_id);
+        $this->assertTrue($comment->fresh()->answer($post->first()->answer_id));
 
         $this->assertFalse($post->fresh()->pending);
     }
@@ -33,7 +33,7 @@ class MarkCommentAsAnswer extends TestCase
         $comments->first()->markAsAnswer();
         $comments->last()->markAsAnswer();
 
-        $this->assertFalse($comments->first()->fresh()->answer);
-        $this->assertTrue($comments->last()->fresh()->answer);
+        $this->assertFalse($comments->first()->fresh()->answer($post->first()->answer_id));
+        $this->assertTrue($comments->last()->fresh()->answer($post->first()->answer_id));
     }
 }
