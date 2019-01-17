@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                {{ $category->exists ? 'Post '.str_plural($pending, count($posts)) .' de '.$category->name : 'Posts' }}
+                {{ $category->exists ? 'Post '.str_plural($pending, count($posts)) .'de '.$category->name : 'Posts' }}
             </h1>
         </div>
     </div>

@@ -12,8 +12,8 @@ class ListPostController extends Controller
     {
         $routeStatus = [
             'posts.mine' => '',
-            'posts.pending' => 'pendiente',
-            'posts.completed' => 'completado'
+            'posts.pending' => 'pendiente ',
+            'posts.completed' => 'completado '
         ];
 
         $pending = $routeStatus[$request->route()->getName()]  ?? '';
