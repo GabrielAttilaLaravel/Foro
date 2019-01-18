@@ -10,8 +10,8 @@ class CreatePostController extends Controller
 {
     public function create()
     {
-        $categories = Category::pluck('name', 'id')->toArray()
-;
+        $categories = Category::pluck('name', 'id')->toArray();
+
         return view('posts.create', compact('categories'));
     }
 
