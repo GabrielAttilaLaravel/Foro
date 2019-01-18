@@ -1,8 +1,8 @@
 <?php
 
+use App\User;
 use App\Models\Comment;
 use App\Policies\CommentPolicy;
-use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class CommentPolicyTest extends TestCase
