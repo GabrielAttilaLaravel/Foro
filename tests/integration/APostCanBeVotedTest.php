@@ -3,7 +3,7 @@
 use App\Models\Vote;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class APostCanBeVotedTest extends TestCase
+    class APostCanBeVotedTest extends TestCase
 {
     use DatabaseTransactions;
 
