@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use phpDocumentor\Reflection\Types\Static_;
 
 class Vote extends Model
 {
@@ -28,6 +27,21 @@ class Vote extends Model
             ['vote' => $amount]
         );
 
+        static::refreshPostScore($post);
+    }
+
+    public static function undoVote(Post $post)
+    {
+        static::where([
+            'post_id' => $post->id,
+            'user_id' => auth()->id()
+        ])->delete();
+
+        static::refreshPostScore($post);
+    }
+
+    public static function refreshPostScore(Post $post)
+    {
         $post->score = static::where(['post_id' => $post->id])->sum('vote');
 
         $post->save();
