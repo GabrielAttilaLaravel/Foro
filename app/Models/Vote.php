@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use phpDocumentor\Reflection\Types\Static_;
 
 class Vote extends Model
 {
@@ -10,13 +11,24 @@ class Vote extends Model
 
     public static function upvote(Post $post)
     {
-        static::create([
-            'user_id' => auth()->id(),
-            'post_id' => $post->id,
-            'vote' => 1,
-        ]);
+        static::addVote($post, 1);
+    }
 
-        $post->score = 1;
+    public static function downvote(Post $post)
+    {
+        static::addVote($post, -1);
+    }
+
+
+    protected static function addVote(Post $post, $amount)
+    {
+
+        static::updateOrCreate(
+            ['post_id' => $post->id, 'user_id' => auth()->id()],
+            ['vote' => $amount]
+        );
+
+        $post->score = static::where(['post_id' => $post->id])->sum('vote');
 
         $post->save();
     }
