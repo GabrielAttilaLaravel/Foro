@@ -3,25 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use App\Repositories\VoteRepository;
 
 class VotePostController extends Controller
 {
-    /**
-     * @var VoteRepository
-     */
-    private $voteRepository;
-
-    public function __construct(VoteRepository $voteRepository)
-    {
-
-        $this->voteRepository = $voteRepository;
-    }
-    
     public function upvote(Post $post)
     {
-        $this->voteRepository->upvote($post);
-        //Vote::upvote($post);
+        $post->upvote();
 
         return [
             'new_score' => $post->score
@@ -30,7 +17,7 @@ class VotePostController extends Controller
 
     public function downvote(Post $post)
     {
-        $this->voteRepository->downvote($post);
+        $post->downvote();
 
         return [
             'new_score' => $post->score
@@ -39,7 +26,7 @@ class VotePostController extends Controller
 
     public function undovote(Post $post)
     {
-        $this->voteRepository->undovote($post);
+        $post->undovote();
 
         return [
             'new_score' => $post->score

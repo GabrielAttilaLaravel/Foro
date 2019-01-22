@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Vote;
+use App\User;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     class APostCanBeVotedTest extends TestCase
@@ -22,7 +23,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_post_can_be_voted()
     {
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
         $this->assertDatabaseHas('votes',[
             'post_id' => $this->post->id,
@@ -35,7 +36,7 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_post_can_be_downvoted()
     {
-        Vote::downvote($this->post);
+        $this->post->downvote();
 
         $this->assertDatabaseHas('votes',[
             'post_id' => $this->post->id,
@@ -48,9 +49,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_post_cannot_be_upvoted_twice_by_same_user()
     {
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
         $this->assertSame(1, Vote::count());
 
@@ -59,9 +60,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_post_cannot_be_downvoted_twice_by_same_user()
     {
-        Vote::downvote($this->post);
+        $this->post->downvote();
 
-        Vote::downvote($this->post);
+        $this->post->downvote();
 
         $this->assertSame(1, Vote::count());
 
@@ -70,9 +71,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_user_can_switch_from_upvote_to_downvote()
     {
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
-        Vote::downvote($this->post);
+        $this->post->downvote();
 
         $this->assertSame(1, Vote::count());
 
@@ -81,9 +82,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
     function test_a_user_can_switch_from_downvote_to_upvote()
     {
-        Vote::downvote($this->post);
+        $this->post->downvote();
 
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
         $this->assertSame(1, Vote::count());
 
@@ -95,11 +96,11 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
         // cualquier usuario agrega un voto
         Vote::create([
             'post_id' => $this->post->id,
-            'user_id' => factory(\App\User::class)->create()->id,
+            'user_id' => factory(User::class)->create()->id,
             'vote' => 1,
         ]);
 
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
         $this->assertSame(2, Vote::count());
 
@@ -107,9 +108,9 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
     }
 
     function test_a_post_can_be_unvoted(){
-        Vote::upvote($this->post);
+        $this->post->upvote();
 
-        Vote::undoVote($this->post);
+        $this->post->undoVote();
 
         $this->assertDatabaseMissing('votes', [
             'post_id' => $this->post->id,

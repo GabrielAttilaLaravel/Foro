@@ -6,9 +6,12 @@ use App\User;
 use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
 use GrahamCampbell\Markdown\Facades\Markdown;
+use App\Traits\CanBeVoted;
 
 class Post extends Model
 {
+    use CanBeVoted;
+
     protected $fillable = ['title', 'content', 'category_id', 'answer_id'];
 
     protected $casts = [
