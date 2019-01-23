@@ -3,9 +3,20 @@ namespace App\Traits;
 
 
 use App\Models\Vote;
+use App\User;
 
 trait CanBeVoted
 {
+    public function getCurrentVoteAttribute()
+    {
+        return $this->getVoteFrom(auth()->user());
+    }
+
+    public function getVoteFrom(User $user)
+    {
+        return Vote::where('user_id', $user->id)->value('vote');
+    }
+    
     public function upvote()
     {
         $this->addVote(1);
