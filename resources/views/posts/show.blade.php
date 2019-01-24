@@ -19,7 +19,7 @@
                     <span class="label label-success">Completado</span>
                 @endif
             </p>
-            <h4>{{ $post->current_vote }}</h4>
+
             <app-vote score="{{ $post->score }}" vote="{{ $post->current_vote }}"></app-vote>
 
             {!! $post->safe_html_content !!}
