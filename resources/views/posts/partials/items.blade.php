@@ -12,5 +12,7 @@
             <span class="label label-success">Completado</span>
         @endif
     </p>
+
+    {!! $post->vote_component !!}
     <hr>
 </article>

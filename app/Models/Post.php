@@ -39,6 +39,11 @@ class Post extends Model
         return $this->belongsToMany(User::class, 'subscriptions');
     }
 
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
     public function latestComments()
     {
         return $this->comments()->orderBy('created_at', 'DESC');

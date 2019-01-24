@@ -5,9 +5,9 @@ Route::get('posts/create', 'CreatePostController@create')->name('posts.create');
 Route::post('posts/create', 'CreatePostController@store')->name('posts.store');
 
 // VOTES
-Route::post('posts/{post}-{slug}/vote/1', 'VotePostController@upvote');
-Route::post('posts/{post}-{slug}/vote/-1', 'VotePostController@downvote');
-Route::delete('posts/{post}-{slug}/vote', 'VotePostController@undoVote');
+Route::post('posts/{post}/vote/1', 'VotePostController@upvote');
+Route::post('posts/{post}/vote/-1', 'VotePostController@downvote');
+Route::delete('posts/{post}/vote', 'VotePostController@undoVote');
 
 // COMMENTS
 Route::post('posts/{post}/comment', 'CommentController@store')->name('comments.store');
