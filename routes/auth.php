@@ -9,6 +9,10 @@ Route::post('posts/{post}/vote/1', 'VotePostController@upvote');
 Route::post('posts/{post}/vote/-1', 'VotePostController@downvote');
 Route::delete('posts/{post}/vote', 'VotePostController@undoVote');
 
+Route::post('comments/{comment}/vote/1', 'VoteCommentController@upvote');
+Route::post('comments/{comment}/vote/-1', 'VoteCommentController@downvote');
+Route::delete('comments/{comment}/vote', 'VoteCommentController@undoVote');
+
 // COMMENTS
 Route::post('posts/{post}/comment', 'CommentController@store')->name('comments.store');
 Route::post('comments/{comment}/accept', 'CommentController@accept')->name('comments.accept');

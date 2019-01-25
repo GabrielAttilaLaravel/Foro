@@ -20,7 +20,7 @@
                 @endif
             </p>
 
-            @component('posts.partials.vote-component', ['post' => $post])@endcomponent
+            {!! $post->vote_component !!}
 
             {!! $post->safe_html_content !!}
 
@@ -43,9 +43,11 @@
             {{-- todo: Paginate comments! --}}
 
             @foreach($post->latestComments as $comment)
-                <article class="{{ $comment->answer($post->answer_id) ? 'answer' : '' }}">
+                <article class="comment {{ $comment->answer($post->answer_id) ? 'answer' : '' }}">
                     {{-- $comment->comment --}}
                     {!! $comment->safe_html_comment !!}
+
+                    {!! $comment->vote_component !!}
                     {{--
                         verificamos si el usuario puede aceptar el comentario y este comentario no
                         esta ya marcado como la respuesta del post

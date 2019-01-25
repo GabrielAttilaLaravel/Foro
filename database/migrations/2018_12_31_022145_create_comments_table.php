@@ -17,6 +17,7 @@ class CreateCommentsTable extends Migration
             $table->increments('id');
 
             $table->mediumText('comment');
+            $table->integer('score')->default(0);
 
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

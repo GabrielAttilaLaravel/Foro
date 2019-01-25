@@ -64,8 +64,6 @@ class VoteForPostTest extends \TestCase
 
     function test_a_guest_user_cannot_vot_for_a_post()
     {
-        $user = $this->defaultUser();
-
         $post = $this->createPost();
 
         $this->postJson("{$post->url}/vote/-1")

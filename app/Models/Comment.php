@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\CanBeVoted;
 use App\User;
-use GrahamCampbell\Markdown\Facades\Markdown;
 use Illuminate\Database\Eloquent\Model;
+use GrahamCampbell\Markdown\Facades\Markdown;
 
 class Comment extends Model
 {
+    use CanBeVoted;
+
     protected $fillable = ['comment', 'post_id'];
 
     public function post()
