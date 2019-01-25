@@ -1,16 +1,15 @@
 <?php
 namespace App\Traits;
 
+use App\Models\Vote;
 use App\User;
 use Collective\Html\HtmlFacade as Html;
 
 trait CanBeVoted
 {
-    public function getCurrentVoteAttribute()
+    public function votes()
     {
-        if (auth()->check()){
-            return $this->getVoteFrom(auth()->user());
-        }
+        return $this->morphMany(Vote::class, 'votable');
     }
 
     public function getVoteComponentAttribute()
@@ -20,6 +19,13 @@ trait CanBeVoted
             'score' => $this->score,
             'vote' => $this->current_vote
         ]);
+    }
+
+    public function getCurrentVoteAttribute()
+    {
+        if (auth()->check()){
+            return $this->getVoteFrom(auth()->user());
+        }
     }
     
     public function getVoteFrom(User $user)

@@ -21,11 +21,7 @@ class VoteForPostTest extends \TestCase
                 'new_score' => 1
             ]);
 
-        $this->assertDatabaseHas('votes',[
-            'post_id' => $post->id,
-            'user_id' => $user->id,
-            'vote' => 1
-        ]);
+        $this->assertSame(1, $post->current_vote);
 
         $this->assertSame(1, $post->fresh()->score);
     }
@@ -42,11 +38,7 @@ class VoteForPostTest extends \TestCase
                 'new_score' => -1
             ]);
 
-        $this->assertDatabaseHas('votes',[
-            'post_id' => $post->id,
-            'user_id' => $user->id,
-            'vote' => -1
-        ]);
+        $this->assertSame(-1, $post->current_vote);
 
         $this->assertSame(-1, $post->fresh()->score);
     }
@@ -65,10 +57,7 @@ class VoteForPostTest extends \TestCase
                 'new_score' => 0
             ]);
 
-        $this->assertDatabaseMissing('votes',[
-            'post_id' => $post->id,
-            'user_id' => $user->id,
-        ]);
+        $this->assertNull($post->current_vote);
 
         $this->assertSame(0, $post->fresh()->score);
     }
@@ -83,9 +72,6 @@ class VoteForPostTest extends \TestCase
             ->assertStatus(401)
             ->assertJson(['error' => 'Unauthenticated.']);
 
-        $this->assertDatabaseMissing('votes',[
-            'post_id' => $post->id,
-            'user_id' => $user->id,
-        ]);
+        $this->assertNull($post->current_vote);
     }
 }
