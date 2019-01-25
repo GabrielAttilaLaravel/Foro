@@ -12,6 +12,14 @@ trait CanBeVoted
         return $this->morphMany(Vote::class, 'votable');
     }
 
+    public function userVote()
+    {
+        return $this->morphOne(Vote::class, 'votable')
+                ->where('user_id', auth()->id())
+                // obtenemos un objeto asi no alla votado;
+                ->withDefault();
+    }
+
     public function getVoteComponentAttribute()
     {
         if (auth()->check()){
@@ -27,7 +35,7 @@ trait CanBeVoted
     public function getCurrentVoteAttribute()
     {
         if (auth()->check()){
-            return $this->getVoteFrom(auth()->user());
+            return $this->userVote->vote;
         }
     }
     

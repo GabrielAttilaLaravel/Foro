@@ -1,5 +1,7 @@
 <?php
 
+Route::post('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
 // POSTS
 Route::get('posts/create', 'CreatePostController@create')->name('posts.create');
 Route::post('posts/create', 'CreatePostController@store')->name('posts.store');
