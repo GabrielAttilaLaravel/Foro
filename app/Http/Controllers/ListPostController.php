@@ -21,6 +21,7 @@ class ListPostController extends Controller
         list($orderColumn, $orderDirection) = $this->getListOrder($request->orden);
 
         $posts = Post::query()
+            // cargas ambiciosas
             ->with(['user', 'category'])
             ->when(auth()->check(), function ($q){
                 $q->with(['userVote']);
